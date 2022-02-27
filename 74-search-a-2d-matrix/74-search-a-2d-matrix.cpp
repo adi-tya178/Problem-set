@@ -2,11 +2,7 @@ class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& mat, int target) {
         int m = mat[0].size();
-          if(m==1 && mat.size()==1)
-          {
-            if(mat[0][0]==target){return true;}
-              else return false;
-          }
+         
         for(int i=0;i<mat.size();i++)
         {
             if(mat[i][0]<=target && mat[i][m-1]>=target)
