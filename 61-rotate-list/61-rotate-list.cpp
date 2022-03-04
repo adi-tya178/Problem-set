@@ -10,21 +10,21 @@
  */
 class Solution {
 public:
-    int helper(ListNode* node)
+    int count(ListNode* root)
     {
-        auto head = node;
-        int count = 0;
-        while(head)
+        int c=0;
+        while(root)
         {
-            count++;
-            head=head->next;
+            c++;
+            root=root->next;
         }
-        return count;
+        return c;
     }
     ListNode* rotateRight(ListNode* head, int k) {
         if(!head)return head;
-        int count = helper(head);
-        k = k%count;
+        int n = count(head);
+        k = k%n;
+        int t = n - k;
         auto slow = head;
         auto fast = head;
         ListNode* prev = NULL;
@@ -33,25 +33,23 @@ public:
         {
             if(i>k)
             {
-                slow = slow->next;
+                slow=slow->next;
             }
             prev = fast;
             fast=fast->next;
             i++;
+            
         }
-        if(slow==NULL)
-        {
-            return head;
-        }
+       
+        if(slow==NULL)return head;
         else
         {
+             //cout<<prev->val<<endl;
             prev->next = head;
-            auto t=slow->next;
-            slow->next=NULL;
+            auto t = slow->next;
+            slow->next = NULL;
             return t;
         }
-        
         return NULL;
-        
     }
 };
