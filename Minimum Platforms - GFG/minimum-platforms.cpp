@@ -13,17 +13,16 @@ class Solution{
     int findPlatform(int arr[], int dep[], int n)
     {
     	// Your code here
-vector<int> rest(2359,0);
-       for(int i=0;i<n;i++){
-           for(int j=arr[i];j<=dep[i];j++)
-               rest[j]++;
-       }
-       int ans = -1;
-       for(int i=0;i<2359;i++){
-           ans = max(ans,rest[i]);
-       }
-       return ans;
-    }
+sort(arr,arr+n);
+sort(dep,dep+n);
+int ans=1,i=1,j=0;
+while(i<n)
+{
+  if(arr[i]<=dep[j]) ans++;
+  else j++;
+  i++;
+ }
+return ans;}
 };
 
 
