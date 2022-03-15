@@ -1,31 +1,32 @@
 class Solution {
 public:
     string minRemoveToMakeValid(string s) {
-        long long int n = s.length();
+       int n = s.length();
         stack<int> st;
-       
-      for(int i=0;i<n;i++)
-      {
-          if(s[i]=='(')st.push(i);
-          else if(s[i]==')')
-          {
-              if(!st.empty())st.pop();
-              else
-              {
-                  s[i]='*';
-              }
-          }
-      }
+    
+        int i=0;
+        while(i<n)
+        {
+            if(st.empty() && s[i]=='(')st.push(i),cout<<i<<endl,i++;
+          else if(s[i]=='(')st.push(i),cout<<i<<endl,i++;
+            else if(st.empty() && s[i]==')'){
+                cout<<i<<endl;
+                s.erase(i,1);
+            }
+              else if(s[i]==')' && s[st.top()]=='(')st.pop(),cout<<i<<endl,i++;
+            else{i++;}
+        }
         
-      
+        
+        if(!st.empty())
+        {
             while(!st.empty())
             {
                 //cout<<s[st.top()]<<endl;
-               s[st.top()]='*';
+                s.erase(st.top(),1);
                 st.pop();
             }
-        
-        s.erase(remove(s.begin(),s.end(),'*'),s.end());
+        }
         return s;
     }
 };
