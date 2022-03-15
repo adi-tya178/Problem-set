@@ -7,13 +7,13 @@ public:
         int i=0;
         while(i<n)
         {
-            if(st.empty() && s[i]=='(')st.push(i),cout<<i<<endl,i++;
-          else if(s[i]=='(')st.push(i),cout<<i<<endl,i++;
+            if(st.empty() && s[i]=='(')st.push(i),i++;
+          else if(s[i]=='(')st.push(i),i++;
             else if(st.empty() && s[i]==')'){
-                cout<<i<<endl;
+                
                 s.erase(i,1);
             }
-              else if(s[i]==')' && s[st.top()]=='(')st.pop(),cout<<i<<endl,i++;
+              else if(s[i]==')' && s[st.top()]=='(')st.pop(),i++;
             else{i++;}
         }
         
