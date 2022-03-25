@@ -1,39 +1,55 @@
 class Solution {
 public:
-    int helper(vector<int> &tops,vector<int>& bottoms,set<int> st)
-    {
-        int n = tops.size();
-        int cnt;
-        int ans = INT_MAX;
-        for(auto x:st)
-        {
-            cnt=0;
-            bool flag = true;
-            for(int i=0;i<n;i++)
-            {
-                if(tops[i]==x)continue;
-                else if(bottoms[i]==x)cnt++;
-                else
-                {
-                    flag = false;
-                    break;
-                   
-                }
-            }
-            if(flag)ans = min(ans,cnt);
-        }
-       return ans;
-    }
     int minDominoRotations(vector<int>& tops, vector<int>& bottoms) {
-        set<int> s1,s2;
-        for(auto x:tops)s1.insert(x);
-        for(auto x:bottoms)s2.insert(x);
+        unordered_map<int,int> mp1;
+        unordered_map<int,int> mp2;
+        unordered_map<int,int> mp3;
+        unordered_map<int,int> mp4;
+        int ans=INT_MAX;
+        for(int i=0;i<tops.size();i++){
+            mp1[tops[i]]++;
+             if(tops[i]!=bottoms[i])
+                 mp3[tops[i]]++;
+        }
+        for(int i=0;i<bottoms.size();i++){
+            mp4[bottoms[i]]++;
+            if(tops[i]!=bottoms[i])
+                mp2[bottoms[i]]++;
+        }
         
-        int op1 = helper(tops,bottoms,s1);
-        int op2 = helper(bottoms,tops,s2);
+        int n=bottoms.size();
+        int m;
+        for(auto x: mp1){
+            m=mp2[x.first];
+            if(x.second+mp2[x.first]==bottoms.size()){
+                int xy=min(m,n-m);
+                ans=min(ans,min(x.second,xy));
+            }
+        }
         
-        int ans = min(op2,op1);
+        for(auto x:mp2){
+            if(x.second+mp1[x.first]==bottoms.size()){
+                // int xy=min(x.second,bottoms.size()-x.second);
+                ans=min(ans,min(x.second,mp1[x.first]));
+            }
+        }
+        for(auto x: mp4){
+            m=mp3[x.first];
+            if(x.second+mp3[x.first]==bottoms.size()){
+                int xy=min(m,n-m);
+                ans=min(ans,min(x.second,xy));
+            }
+        }
         
-        return ans==INT_MAX?-1:ans;
+        for(auto x:mp3){
+            if(x.second+mp4[x.first]==bottoms.size()){
+                // int xy=min(x.second,bottoms.size()-x.second);
+                ans=min(ans,min(x.second,mp4[x.first]));
+            }
+        }
+        
+        if(ans==INT_MAX)
+            return -1;
+        return ans;
     }
 };
