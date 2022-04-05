@@ -1,10 +1,10 @@
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        int n = height.size();
+       int n = height.size();
         int i=0;
         int ans = INT_MIN;
-        int j = n-1;
+        int j=n-1;
         while(i<j)
         {
             ans = max(ans,(j-i)*min(height[i],height[j]));
