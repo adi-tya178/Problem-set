@@ -1,9 +1,10 @@
 class Solution {
 public:
-      static bool compare(const string &s1, const string &s2) {
-        return s1.length() < s2.length();
+   static bool compare(string &a,string &b)
+    {
+        return a.length()<b.length();
     }
-
+      
    bool issubsequence(string& s1, string& s2)
 {
     int n = s1.length(), m = s2.length();
@@ -18,10 +19,9 @@ public:
 }
     int longestStrChain(vector<string>& s) {
       sort(s.begin(),s.end(),compare);
+       
         int n = s.size();
         vector<int> dp(n+1,1);
-        //memset(dp,1,sizeof(dp));
-        
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<i;j++)
