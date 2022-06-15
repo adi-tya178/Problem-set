@@ -10,23 +10,22 @@
  */
 class Solution {
 public:
-    int count(ListNode* root)
+    int totalNode(ListNode* head)
     {
-        int c=0;
-        while(root)
+        int n=0;
+        while(head)
         {
-            c++;
-            root=root->next;
+            head=head->next;
+            n++;
         }
-        return c;
+        return n;
     }
     ListNode* rotateRight(ListNode* head, int k) {
-        if(!head)return head;
-        int n = count(head);
-        k = k%n;
-        int t = n - k;
-        auto slow = head;
-        auto fast = head;
+        if(!head)return NULL;
+        if(k==0)return head;
+        auto fast = head,slow = head;
+        int nodes = totalNode(head);
+       k = k%nodes;
         ListNode* prev = NULL;
         int i=0;
         while(fast!=NULL)
