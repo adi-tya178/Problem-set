@@ -1,63 +1,81 @@
 class Solution {
 public:
-    int largestRectangleArea(vector<int>& a) {
-       int n = a.size();
-           vector<long long>nsl;
-           int idx1=-1;
-           stack<pair<long long,int>>s1;
-           for(int i=0;i<n;i++){
-               if(s1.size()==0){
-                   nsl.push_back(idx1);
-               }
-               else if(s1.size()>0 && s1.top().first<a[i]){
-                   nsl.push_back(s1.top().second);
-               }
-               else if(s1.size()>0 && s1.top().first>=a[i]){
-                   while (s1.size() > 0 && s1.top().first >= a[i]){
-                       s1.pop();
-                   }
-                   if(s1.size()==0){
-                       nsl.push_back(idx1);
-                   }
-                   else{
-                       nsl.push_back(s1.top().second);
-                   }
-               }
-               s1.push({a[i],i});
-           }
-           vector<long long>nsr;
-           int idx2=n;
-           stack<pair<long long,int>>s2;
-           for(int i=n-1;i>=0;i--){
-               if(s2.size()==0){
-                   nsr.push_back(idx2);
-               }
-               else if(s2.size()>0 && s2.top().first<a[i]){
-                   nsr.push_back(s2.top().second);
-               }
-               else if(s2.size()>0 && s2.top().first>=a[i]){
-                   while (s2.size() > 0 && s2.top().first >= a[i]){
-                       s2.pop();
-                   }
-                   if(s2.size()==0){
-                       nsr.push_back(idx2);
-                   }
-                   else{
-                       nsr.push_back(s2.top().second);
-                   }
-               }
-               s2.push({a[i],i});
-           }
-           reverse(nsr.begin(),nsr.end());
-           vector<long long>width(n);
-           for(int i=0;i<n;i++){
-               width[i]=nsr[i]-nsl[i]-1;
-           }
-           long long area=0;
-           for(int i=0;i<n;i++){
-               long long val=width[i]*a[i];
-               area=max(area,val);
-           }
-           return area;
+    vector<int> nearestSmallestLeft(vector<int> &height)
+{
+        int n = height.size();
+    stack<pair<int,int>> st;
+    vector<int> ans(n);
+    for(int i=0;i<height.size();i++)
+    {
+        
+        
+        while(!st.empty() && st.top().first>=height[i])
+        {
+            st.pop();
+        }
+        if(st.empty())
+        {
+            ans[i] = -1;
+        }
+        else
+        {
+            ans[i] = st.top().second;
+        }
+        st.push({height[i],i});
+    }
+        
+    return ans;
+}
+vector<int> nearestSmallestRight(vector<int> &height)
+{
+    
+    int n = height.size();
+    stack<pair<int,int>> st;
+    vector<int> ans(n);
+    for(int i=height.size()-1;i>=0;i--)
+    {
+        while(!st.empty() && st.top().first>=height[i])
+        {
+            st.pop();
+        }
+        if(st.empty())
+        {
+            ans[i] = n;
+        }
+        else
+        {
+            ans[i] = st.top().second;
+        }
+        st.push({height[i],i});
+    }
+     // reverse(ans.begin(),ans.end());
+    
+    return ans;
+}
+    int largestRectangleArea(vector<int>& heights) {
+    int n = heights.size();
+        if(n==1)return heights[0];
+    vector<int> left = nearestSmallestLeft(heights);
+    vector<int> right = nearestSmallestRight(heights);
+    for(auto x:right)
+    {
+        cout<<x<<endl;
+    }
+    vector<int> width(n);
+    for(int i=0;i<n;i++)
+    {
+        //cout<<right[i]<<" "<<left[i]<<endl;
+        width[i] =right[i]-left[i]-1;
+        //cout<<width[i]<<endl;
+    }
+    int ans = 0;
+    for(int i=0;i<n;i++)
+    {
+        int val = width[i]*heights[i];
+        ans = max(ans,val);
+    }
+  
+    return ans;
+        
     }
 };
