@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
-        auto comp = [](const vector<int>& p1, const vector<int>& p2)
+           auto comp = [](const vector<int>& p1, const vector<int>& p2)
                     { return p1[0] > p2[0] || (p1[0] == p2[0] && p1[1] < p2[1]); };
     sort(people.begin(), people.end(), comp);
     int n = people.size();
@@ -15,6 +15,5 @@ public:
     }
     
     return res;
-        
     }
 };
