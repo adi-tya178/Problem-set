@@ -11,21 +11,30 @@
  */
 class Solution {
 public:
-    TreeNode* helper(vector<int>&preorder,vector<int> &inorder,int &rootidx,int left,int right)
+    TreeNode* helper(vector<int>& preorder, vector<int> &inorder,int &rootInd,int start,int end)
     {
-       if(left>right)return NULL;
-        int p=0;
-        while(inorder[p]!=preorder[rootidx])p++;
-        rootidx++;
-        TreeNode* newnode = new TreeNode(inorder[p]);
-        newnode->left = helper(preorder,inorder,rootidx,left,p-1);
-        newnode->right = helper(preorder,inorder,rootidx,p+1,right);
+        if(start>end)return NULL;
+        int ind = 0;
+        for(int i=start;i<=end;i++)
+        {
+            if(preorder[rootInd] == inorder[i])
+            {
+                ind = i;
+                break;
+            }
+        }
         
-        return newnode;
+        TreeNode* root = new TreeNode(inorder[ind]);
+        rootInd++;
+        root->left = helper(preorder,inorder,rootInd,start,ind-1);
+        root->right = helper(preorder,inorder,rootInd,ind+1,end);
+        return root;
+        
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        int rootidx=0;
-        return helper(preorder,inorder,rootidx,0,inorder.size()-1);
+        int n = inorder.size();
+        int rootInd = 0;
+        return helper(preorder,inorder,rootInd,0,n-1);
         
     }
 };
