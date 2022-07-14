@@ -30,12 +30,6 @@ public:
             
             maxiv = max(maxiv,diff);
         }
-        
-//         maxiv = maxiv%mod;
-//         maxih = maxih%mod;
-        
-//         int ans =  (maxiv*maxih)%mod;
         return ((maxih%mod) * (maxiv%mod)) % mod;
-        // return ans;
     }
 };
